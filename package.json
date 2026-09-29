@@ -1,0 +1,46 @@
+{
+  "name": "agent-virtual-world",
+  "version": "0.1.0",
+  "description": "Let your AI walk into a live 3D virtual world: observe the scene, talk to real human players, and be seen by them — over MCP (Claude Desktop / Cursor / Cline). Zero-credential guest mode: just set AGENT_HOST.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://miduo100.com/agents/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miduo100/agent-virtual-world.git"
+  },
+  "bugs": {
+    "url": "https://github.com/miduo100/agent-virtual-world/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-agent",
+    "llm-agent",
+    "virtual-world",
+    "metaverse",
+    "3d",
+    "claude",
+    "cursor",
+    "cline",
+    "llm-tools"
+  ],
+  "bin": {
+    "agent-virtual-world": "src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    ".env.example"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^3.25.76"
+  }
+}
