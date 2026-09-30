@@ -9,9 +9,10 @@ no human-only steps, no credentials, and no API keys.
 It connects an AI to a **live, persistent multiplayer 3D world**. The AI appears as a
 visible avatar that real human players can see, walk up to, and chat with.
 
-Exposed surface: 8 `world_*` tools (`world_discover`, `world_observe`, `world_walk_to`,
-`world_say`, `world_look_at`, `world_status`, ...), 1 resource (in-world guide), and
-2 prompts (`world_guided_tour`, `world_report`).
+Exposed surface: 8 `world_*` tools (`world_discover`, `world_enter`, `world_observe`,
+`world_say`, `world_walk_to`, `world_follow`, `world_chat_history`, `world_leave`),
+1 resource (in-world guide), and 2 prompts (`world_guided_tour`, `world_report`).
+The same surface is served over remote MCP at `https://miduo100.com/mcp` (Streamable HTTP).
 
 ## 2. Requirements
 
@@ -19,7 +20,9 @@ Exposed surface: 8 `world_*` tools (`world_discover`, `world_observe`, `world_wa
 - Network access to the world endpoint (default `https://miduo100.com`).
 - **No credentials needed**: guest mode is public by design.
 
-## 3. Install
+## 3. Install — pick ONE of two ways
+
+### Option A (default) — stdio, nothing to install but Node
 
 Do **not** clone the repository. The package is published on npm, so run it on demand:
 
@@ -30,9 +33,35 @@ npx -y agent-virtual-world
 The server speaks **MCP over stdio**. It writes nothing to stdout except protocol frames,
 so it is safe to launch directly from a host.
 
+### Option B — remote MCP, zero install (no Node, no npx)
+
+If your host supports remote MCP servers (Streamable HTTP), skip npx entirely and point it at:
+
+```
+https://miduo100.com/mcp
+```
+
+Same 8 tools / 1 resource / 2 prompts, no local process, no `AGENT_HOST` needed.
+Use this when `npx` is blocked (corporate proxy, npm TLS interception, offline Node) —
+it is the shortest path to a successful install.
+
 ## 4. Configure your MCP host
 
-### Windows
+### Remote MCP (Option B, recommended when supported)
+
+```json
+{
+  "mcpServers": {
+    "virtual-world": {
+      "type": "streamableHttp",
+      "url": "https://miduo100.com/mcp",
+      "disabled": false
+    }
+  }
+}
+```
+
+### Windows (Option A, stdio)
 
 Windows cannot spawn `npx` directly — wrap it in `cmd`:
 
@@ -64,9 +93,11 @@ Windows cannot spawn `npx` directly — wrap it in `cmd`:
 }
 ```
 
-> **Cline**: this list lives in `cline_mcp_settings.json`. Open
-> **MCP Servers → Configure MCP Servers**, add the block above inside the existing
-> `mcpServers` object, and leave the rest of the file untouched.
+> **Cline**: open **MCP Servers → Configure MCP Servers** and add the block above inside
+> the existing `mcpServers` object, leaving the rest of the file untouched. Prefer the UI —
+> it writes to whichever path the installed build uses. For reference: Cline 4.x reads
+> `~/.cline/data/settings/cline_mcp_settings.json`, while older builds used
+> `<VS Code user data>/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`.
 
 ## 5. Environment variables
 
@@ -83,7 +114,9 @@ Windows cannot spawn `npx` directly — wrap it in `cmd`:
    If this fails, the endpoint is unreachable — check `AGENT_HOST` and network.
 2. Call **`world_observe`**.
    Expected: your avatar's position, plus nearby objects and players.
-   This confirms stdio transport, the HTTP layer, and the guest session all work.
+   This confirms the transport, the HTTP layer, and the guest session all work.
+3. If `world_discover` works but `world_observe` says you are not in the world, call
+   **`world_enter`** first — `discover` is read-only and does not enter.
 
 Both calls must succeed **without any credential prompt**. If `world_discover` reports
 `agentEnabled: false`, the world operator has switched AI access off — that is a
@@ -93,7 +126,10 @@ server-side switch, not an installation problem.
 
 - npm: `agent-virtual-world` (v0.1.2, MIT).
 - Official MCP Registry: `io.github.miduo100/agent-virtual-world`.
-- Verified end-to-end with `npx -y agent-virtual-world`: stdio handshake, `tools/list`,
-  `world_discover`, `world_observe` all pass.
-- If something fails, the most common cause is a host that spawns `npx` without `cmd`
-  on Windows (see §4).
+- Remote MCP (Streamable HTTP): `https://miduo100.com/mcp` — health check
+  `https://miduo100.com/mcp/health` returns `{"ok":true,...,"tools":8}`.
+- Verified end-to-end on both transports: handshake, `tools/list` (8 tools),
+  `world_discover` (returns world name `创世虚拟世界`, `agentEnabled: true`, tier `guest`),
+  `world_observe`.
+- If something fails on Option A, the most common cause is a host that spawns `npx`
+  without `cmd` on Windows (see §4) — Option B avoids it entirely.
