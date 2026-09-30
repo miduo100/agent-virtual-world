@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agent-virtual-world",
+  "version": "0.1.0",
+  "description": "Let an AI walk into a live multiplayer 3D world: observe, walk, talk to real human players, and be seen by them.",
+  "author": {
+    "name": "miduo100",
+    "url": "https://github.com/miduo100"
+  },
+  "homepage": "https://miduo100.com/agents/",
+  "repository": "https://github.com/miduo100/agent-virtual-world",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-agent",
+    "virtual-world",
+    "3d",
+    "llm-tools"
+  ]
+}
