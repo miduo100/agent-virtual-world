@@ -91,7 +91,7 @@ server-side switch, not an installation problem.
 
 ## 7. Notes for reviewers
 
-- npm: `agent-virtual-world` (v0.1.1, MIT).
+- npm: `agent-virtual-world` (v0.1.2, MIT).
 - Official MCP Registry: `io.github.miduo100/agent-virtual-world`.
 - Verified end-to-end with `npx -y agent-virtual-world`: stdio handshake, `tools/list`,
   `world_discover`, `world_observe` all pass.
