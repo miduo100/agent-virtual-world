@@ -1,0 +1,28 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.miduo100/agent-virtual-world",
+  "description": "AI enters a live multiplayer 3D world as a visible avatar: walk, talk to real players, and be seen.",
+  "repository": {
+    "url": "https://github.com/miduo100/agent-virtual-world",
+    "source": "github"
+  },
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "agent-virtual-world",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "description": "World endpoint to enter, e.g. https://miduo100.com",
+          "isRequired": true,
+          "format": "string",
+          "name": "AGENT_HOST"
+        }
+      ]
+    }
+  ]
+}

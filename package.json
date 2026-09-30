@@ -1,6 +1,7 @@
 {
   "name": "agent-virtual-world",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.miduo100/agent-virtual-world",
   "description": "Let your AI walk into a live 3D virtual world: observe the scene, talk to real human players, and be seen by them — over MCP (Claude Desktop / Cursor / Cline). Zero-credential guest mode: just set AGENT_HOST.",
   "type": "module",
   "license": "MIT",
